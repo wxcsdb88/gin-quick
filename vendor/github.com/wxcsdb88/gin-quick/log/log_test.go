@@ -9,15 +9,15 @@ import (
 )
 
 func TestLogger(t *testing.T) {
-	var logrusLogger = logrus.GetLogger()
+	// var globalLogger *Logger
+	// var globalLogger Logger = &logrus.LogrusLogger{}
+	var globalLogger = logrus.GetLogger()
 
-	Register("logrus", logrusLogger)
+	Register("logrus", globalLogger)
 	fmt.Printf("loggers is %#v\n", loggers)
-	fmt.Printf("GetLevel %#v\n", logrusLogger.GetLevel())
 
 	var zapLogger = zap.GetLogger()
 	Register("zap", zapLogger)
 	fmt.Printf("loggers is %#v\n", loggers)
-	fmt.Printf("GetLevel %#v\n", zapLogger.GetLevel())
 
 }

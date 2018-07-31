@@ -1,22 +1,18 @@
-package log
+/**
+*  @file
+*  @copyright defined in dashboard-api/LICENSE
+ */
 
-// Level type
-type Level uint32
+package common
 
-// AllLevels A constant exposing all logging levels
-var AllLevels = []Level{
-	PanicLevel,
-	FatalLevel,
-	ErrorLevel,
-	WarnLevel,
-	InfoLevel,
-	DebugLevel,
-}
+import (
+	"github.com/sirupsen/logrus"
+)
 
 const (
 	// PanicLevel level, highest level of severity. Logs and then calls panic with the
 	// message passed to Debug, Info, ...
-	PanicLevel Level = iota
+	PanicLevel logrus.Level = iota
 	// FatalLevel level. Logs and then calls `os.Exit(1)`. It will exit even if the
 	// logging level is set to Panic.
 	FatalLevel
@@ -31,3 +27,25 @@ const (
 	// DebugLevel level. Usually only enabled when debugging. Very verbose logging.
 	DebugLevel
 )
+
+var logLevelMap = map[string]logrus.Level{
+	"panic": logrus.PanicLevel,
+	"fatal": logrus.FatalLevel,
+	"error": logrus.ErrorLevel,
+	"warn":  logrus.WarnLevel,
+	"info":  logrus.InfoLevel,
+	"debug": logrus.DebugLevel,
+}
+
+// GetLogLevel get the logLevel from logLevelName
+func GetLogLevel(logLevelName string) logrus.Level {
+	if v, ok := logLevelMap[logLevelName]; ok {
+		return v
+	}
+
+	// validate the defaultLogLevel config
+	if v, ok := logLevelMap[LogLevel]; ok {
+		return v
+	}
+	return logrus.DebugLevel
+}
