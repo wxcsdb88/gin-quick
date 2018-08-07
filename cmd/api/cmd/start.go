@@ -1,9 +1,13 @@
 package cmd
 
 import (
+	"fmt"
+	"path/filepath"
 	"sync"
 
 	"github.com/spf13/cobra"
+
+	"github.com/wxcsdb88/gin-quick/config"
 )
 
 var (
@@ -18,6 +22,10 @@ var startCmd = &cobra.Command{
 	start the api`,
 	Run: func(cmd *cobra.Command, args []string) {
 		var wg sync.WaitGroup
+		globalConfig := config.LoadConfig(*apiConfigFile)
+		relaFilePath, _ := filepath.Abs(*apiConfigFile)
+		fmt.Printf("load config file: %v\n", relaFilePath)
+		fmt.Printf("config: %#v\n\n", globalConfig)
 
 		wg.Add(1)
 		wg.Wait()
