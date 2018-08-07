@@ -7,11 +7,13 @@ import (
 
 	"github.com/spf13/cobra"
 
+	"github.com/wxcsdb88/gin-quick/cmd"
 	"github.com/wxcsdb88/gin-quick/config"
 )
 
 var (
 	apiConfigFile *string
+	versionFlag   *bool
 )
 
 var startCmd = &cobra.Command{
@@ -34,8 +36,13 @@ var startCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(startCmd)
+	// add version cmd
+	rootCmd.AddCommand(cmd.VersionCmd)
+	versionFlag = cmd.VersionCmd.Flags().BoolP("version", "v", true, "api config file (required)")
+	cmd.VersionFlag = versionFlag
 
+	rootCmd.AddCommand(startCmd)
 	apiConfigFile = startCmd.Flags().StringP("config", "c", "", "api config file (required)")
 	startCmd.MarkFlagRequired("config")
+
 }
