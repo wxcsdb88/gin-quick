@@ -4,6 +4,9 @@ import (
 	"fmt"
 	"path/filepath"
 	"sync"
+	"time"
+
+	"github.com/wxcsdb88/gin-quick/log/logruslogger"
 
 	"github.com/spf13/cobra"
 
@@ -28,6 +31,9 @@ var startCmd = &cobra.Command{
 		relaFilePath, _ := filepath.Abs(*apiConfigFile)
 		fmt.Printf("load config file: %v\n", relaFilePath)
 		fmt.Printf("config: %#v\n\n", globalConfig)
+
+		logger := logruslogger.GetLoggerWithCaller("api", true, true, globalConfig)
+		logger.Info("start api at %v", time.Now().Local())
 
 		wg.Add(1)
 		wg.Wait()

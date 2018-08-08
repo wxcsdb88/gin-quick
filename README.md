@@ -5,9 +5,9 @@
 > with go in 2018
 
 - [ ] gin demo
-- [ ] config(toml)
-- [ ] cmd and compile script
-- [ ] log
+- [x] config(toml)
+- [x] cmd and compile script
+- [x] log
 - [ ] rpc, websocket
 - [ ] redis, db, cache
 - [ ] api(rate limit)
