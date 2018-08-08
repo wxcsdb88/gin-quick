@@ -1,4 +1,5 @@
 name = "test"
+runMode = "release" #debug, release, test
 
 [mysql]
     hostname = "127.0.0.1"
@@ -20,6 +21,14 @@ name = "test"
     maxIdle = 2
     maxActive = 5
 
+[server]
+listenAddr = ":8082"
+httpsAddr = ":8053"
+readTimeout = 0
+writeTimeout = 0
+idleTimeout = 0
+maxHeaderBytes = 1048576 # 1<<20 1MB
+limitConnections = 0
 
 [websocket]
     port = "8081"
@@ -32,8 +41,9 @@ tempFolder = "/tmp" #must be exist and can access it
 
 
 [log]
-level = "debug"
-#depth = -1 #logger depth can modify
+level = "debug" 
+formatter = "json" #json or text, default text
+depth = 8 #logger depth can modify
 withCallerHook = true #print line, file and module name in log
 logFilePrefix = ""
 logFileName = "all.logs"

@@ -6,6 +6,8 @@ import (
 	"sync"
 	"time"
 
+	"github.com/wxcsdb88/gin-quick/api"
+
 	"github.com/wxcsdb88/gin-quick/log/logruslogger"
 
 	"github.com/spf13/cobra"
@@ -34,6 +36,16 @@ var startCmd = &cobra.Command{
 
 		logger := logruslogger.GetLoggerWithCaller("api", true, true, globalConfig)
 		logger.Info("start api at %v", time.Now().Local())
+
+		apiServer, err := api.New(globalConfig)
+		if err != nil {
+			logger.Error(err.Error())
+			return
+		}
+		if err := apiServer.Start(); err != nil {
+			logger.Error("api server run failed %v", err)
+			return
+		}
 
 		wg.Add(1)
 		wg.Wait()

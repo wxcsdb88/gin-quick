@@ -101,6 +101,13 @@ func GetLoggerWithOptions(logName string, options *Options, conf *config.GlobalC
 			panic(fmt.Sprintf("rotatelogs log failed: %s", err.Error()))
 		}
 
+		var formatter logrus.Formatter
+
+		formatter = &logrus.TextFormatter{}
+		if conf.Log.Formatter == "json" {
+			formatter = &logrus.JSONFormatter{}
+		}
+
 		log.AddHook(lfshook.NewHook(
 			lfshook.WriterMap{
 				logrus.DebugLevel: writer,
@@ -109,7 +116,7 @@ func GetLoggerWithOptions(logName string, options *Options, conf *config.GlobalC
 				logrus.ErrorLevel: writer,
 				logrus.FatalLevel: writer,
 			},
-			&logrus.TextFormatter{},
+			formatter,
 		))
 
 		pathMap := lfshook.PathMap{
@@ -121,7 +128,7 @@ func GetLoggerWithOptions(logName string, options *Options, conf *config.GlobalC
 		}
 		log.AddHook(lfshook.NewHook(
 			pathMap,
-			&logrus.TextFormatter{},
+			formatter,
 		))
 	} else {
 		if printLog {
