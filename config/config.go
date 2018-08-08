@@ -23,6 +23,8 @@ func LoadConfig(file string) *GlobalConfig {
 	}
 
 	c := &GlobalConfig{}
+	// set defaul config
+	c.defaultConfig()
 
 	err = v.Unmarshal(&c)
 	if err != nil {
@@ -56,7 +58,11 @@ type WebsocketOptions struct {
 }
 
 func (c *GlobalConfig) defaultConfig() {
-
+	c.Log.Depth = 8
+	c.Log.Level = "info"
+	c.Log.Write = false
+	c.Log.MaxAge = 24 * 7   // 7 days
+	c.Log.RotationTime = 24 // 24 hours
 }
 
 // TLSOptions web socket options
@@ -64,14 +70,28 @@ type TLSOptions struct {
 	Addr     string
 	CertFile string
 	KeyFile  string
+	Disable  bool
 }
 
 // CommonOptions common options
 type CommonOptions struct {
+	TempFolder string // temp file dir
 }
 
 // LogOptions log options
 type LogOptions struct {
+	Level string
+	Depth int
+
+	LogFilePrefix  string
+	LogFileName    string
+	LogDir         string
+	DisableConsole bool
+	Write          bool
+	WithCallerHook bool
+
+	MaxAge       int // rotatelogs max age, unit hour
+	RotationTime int // rotatelogs rotation time, unit hour
 }
 
 // MysqlOptions mysql options

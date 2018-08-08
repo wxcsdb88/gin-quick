@@ -27,10 +27,24 @@ name = "test"
 [jsonrpc]
     port = "8082"
 
+[common]
+tempFolder = "/tmp" #must be exist and can access it
+
+
 [log]
-    level = "debug"
+level = "debug"
+#depth = -1 #logger depth can modify
+withCallerHook = true #print line, file and module name in log
+logFilePrefix = ""
+logFileName = "all.logs"
+logDir = "gin-quick-logs"
+write = true
+maxAge = 168 #rotalogs max age, unit hours, default 24*7
+rotationTime = 24 #rotalogs rotation time, unit hours, default 24
+
 
 [tls]
+    disable = true #default enable https
     addr = "8043"
     certFile = ""
     keyFile = ""
