@@ -2,6 +2,8 @@ package config
 
 import (
 	"os"
+	"strconv"
+	"time"
 
 	"github.com/spf13/viper"
 )
@@ -37,6 +39,8 @@ func LoadConfig(file string) *GlobalConfig {
 // GlobalConfig global config
 type GlobalConfig struct {
 	Name string
+	//RunMode, ex: debug,release,test
+	RunMode string
 
 	Mysql     MysqlOptions
 	Redis     RedisOptions
@@ -45,6 +49,24 @@ type GlobalConfig struct {
 	Common    CommonOptions
 	Log       LogOptions
 	TLS       TLSOptions
+
+	Server ServerOptions
+}
+
+// ServerOptions server options
+type ServerOptions struct {
+	ListenAddr      string
+	LimitConnection int
+
+	RootRouterPrefix string
+
+	EnableHTTPS bool
+	HTTPSAddr   string
+
+	ReadTimeout    time.Duration
+	WriteTimeout   time.Duration
+	IdleTimeout    time.Duration
+	MaxHeaderBytes int
 }
 
 // JsonrpcOptions json rpc options
@@ -58,8 +80,23 @@ type WebsocketOptions struct {
 }
 
 func (c *GlobalConfig) defaultConfig() {
+	//RunMode, ex: debug,release,test
+	c.RunMode = "debug"
+	// generate random name for default
+	c.Name = strconv.FormatInt(time.Now().UnixNano(), 10)
+
+	// default server config
+	c.Server.ListenAddr = "8081"
+	c.Server.HTTPSAddr = "8043"
+	c.Server.ReadTimeout = 0
+	c.Server.WriteTimeout = 0
+	c.Server.IdleTimeout = 0
+	c.Server.MaxHeaderBytes = 1 << 20 // 1MB
+
+	// default log config
 	c.Log.Depth = 8
 	c.Log.Level = "info"
+	c.Log.Formatter = "text" // json or text
 	c.Log.Write = false
 	c.Log.MaxAge = 24 * 7   // 7 days
 	c.Log.RotationTime = 24 // 24 hours
@@ -82,6 +119,8 @@ type CommonOptions struct {
 type LogOptions struct {
 	Level string
 	Depth int
+
+	Formatter string //json or text formatter log
 
 	LogFilePrefix  string
 	LogFileName    string

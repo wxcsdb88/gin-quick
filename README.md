@@ -4,7 +4,7 @@
 
 > with go in 2018
 
-- [ ] gin demo
+- [x] gin demo
 - [x] config(toml)
 - [x] cmd and compile script
 - [x] log
@@ -17,7 +17,7 @@
 - [ ] event
 - [ ] swagger
 - [ ] tools
-- [ ] log output
+- [x] log output
 - [ ] cron
 - [ ] hot reload
 - [ ] oauth
