@@ -1,0 +1,9 @@
+name = "souls"
+
+[redis]
+host = "x7981920932190"
+port = "6379"
+password = ""
+idleTimeout = xx
+maxIdle = "mm9"
+maxActive = 5

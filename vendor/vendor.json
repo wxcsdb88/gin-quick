@@ -93,6 +93,12 @@
 			"revisionTime": "2018-07-24T18:49:33Z"
 		},
 		{
+			"checksumSHA1": "0cpNWR3lDb+QfroOtScXWONhHY0=",
+			"path": "github.com/soulskit/config",
+			"revision": "fbe7fc451b50ea49dfd58852ef48939a6e17e496",
+			"revisionTime": "2018-08-08T15:47:13Z"
+		},
+		{
 			"checksumSHA1": "wsfbX7YxbkeBp+xm9M9nBFzrCnA=",
 			"path": "github.com/spf13/afero",
 			"revision": "787d034dfe70e44075ccc060d346146ef53270ad",
